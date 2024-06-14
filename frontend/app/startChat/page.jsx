@@ -192,7 +192,6 @@ export default function StartChat() {
     const [chatState, setChatState] = useRecoilState(currentChatState);
     const [chatHistory, setchatHistory] = useState([])
     const bottomRef = useRef(null);
-    const [loader, setloader] = useState(true);
 
     useEffect(() => {
         if (status === "authenticated" && session?.user?.id) {
@@ -206,7 +205,6 @@ export default function StartChat() {
         if (sender && recieverId) {
             const fetchChats = async () => {
                 const chats = await getPrevMsg(sender, recieverId);
-                setloader(false);
                 setchatHistory(chats);
             };
             fetchChats();
@@ -272,7 +270,6 @@ export default function StartChat() {
                     </div>
                 </nav>
             </div>
-            {loader ? <div className="text-center text-3xl">loading....</div> : null}
             <div >
                 {chatHistory.map((value, index) => (
                     <div key={index} className={session?.user?.id === value.senderId ? "flex items-start gap-2.5 justify-end" : "flex items-start gap-2.5"}>
