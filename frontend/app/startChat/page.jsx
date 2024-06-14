@@ -35,16 +35,16 @@ export default function StartChat(){
       }, [status, session, setSender, router]);
     
     useEffect(() => {
-        if (sender && searchParams.get('recieverId')) {
+        if (sender && recieverId) {
         const fetchChats = async () => {
             const chats = await getPrevMsg(sender, searchParams.get('recieverId'));
-            console.log(chats);
+            // console.log(chats);
             setloader(false);
             setchatHistory(chats);
         };
         fetchChats();
         }
-    }, [sender]);
+    }, [sender,recieverId]);
 
     useEffect(() => {
         if(sender){
