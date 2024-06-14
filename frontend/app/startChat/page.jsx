@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { msgCreate } from '@/app/actions/user';
 
 
-export default function startChat(){
+export default function StartChat(){
     const [seflmsg,setselfmsg] = useState("");
     const [chathistory,setchathistory] = useState([]);
     const [incommingmsg,setincommingmsg] = useState("");

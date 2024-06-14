@@ -10,7 +10,7 @@ import { useRecoilState } from "recoil";
 import { senderIdAtom } from "@/store/Atoms";
 import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function Chatting() {
   const [filter, setFilter] = useState(""); // Set initial state as string
   const [usersList, setUsersList] = useState([]);
   const [sender, setSender] = useRecoilState(senderIdAtom);

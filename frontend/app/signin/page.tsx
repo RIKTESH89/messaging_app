@@ -9,7 +9,7 @@ import { useState } from 'react';
 import {BottomWarning} from '@/components/BottomWarning'
 import { NavBar } from '@/components/Navbar';
 
-export default function() {
+export default function Signin() {
     const router = useRouter();
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
