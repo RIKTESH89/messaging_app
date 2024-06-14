@@ -2,17 +2,43 @@
 
 import prisma from "@/db"
 
-export async function signup(username:string, password:string,email:string) {
-    // should add zod validation here
-    const user = await prisma.user.create({
-        data: {
-            username: username,
-            password: password,
-            email:email
-        }
-    });
+import { z } from "zod";
 
-    console.log(user.id);
+// Define the Zod schema
+const userSchema = z.object({
+  username: z.string()
+    .min(3, "Username must be at least 3 characters long")
+    .max(30, "Username must be at most 30 characters long")
+    .regex(/^[a-zA-Z]+$/, "Username must not contain numbers or special characters"), // Regex for no numbers and only alphabets
+  password: z.string()
+    .min(6, "Password must be at least 6 characters long"),
+  email: z.string()
+    .email("Invalid email address")
+});
+
+export async function signup(username:string, password:string,email:string) {
+  const validationResult = userSchema.safeParse({ username, password, email });
+
+  if (!validationResult.success) {
+    // Handle validation errors
+    console.error(validationResult.error);
+    // alert("Wrong Input format")
+    throw new Error("Invalid input data");
+  }
+
+  // Destructure the validated data
+  const { username: validUsername, password: validPassword, email: validEmail } = validationResult.data;
+
+  // Proceed with the database operation
+  const user = await prisma.user.create({
+    data: {
+      username: validUsername,
+      password: validPassword,
+      email: validEmail
+    }
+  });
+
+  console.log(user.id);
 
     return user.id
 }
