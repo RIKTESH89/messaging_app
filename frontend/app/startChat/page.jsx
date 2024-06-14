@@ -37,7 +37,7 @@ export default function StartChat(){
     useEffect(() => {
         if (sender && recieverId) {
         const fetchChats = async () => {
-            const chats = await getPrevMsg(sender, searchParams.get('recieverId'));
+            const chats = await getPrevMsg(sender, recieverId);
             // console.log(chats);
             setloader(false);
             setchatHistory(chats);
@@ -47,12 +47,12 @@ export default function StartChat(){
     }, [sender,recieverId]);
 
     useEffect(() => {
-        if(sender){
+        if(sender && recieverId){
             const newSocket = new WebSocket('wss://messaging-app-idpa.onrender.com');
         newSocket.onopen = () => {
             console.log("sockets are open now")
             console.log(chatState[searchParams.get('recieverId')])
-            newSocket.send(JSON.stringify({type:"signup",id : parseInt(sender),sid: parseInt(sender),rid: parseInt(searchParams.get('recieverId'))}));
+            newSocket.send(JSON.stringify({type:"signup",id : parseInt(sender),sid: parseInt(sender),rid: parseInt(recieverId)}));
         }
 
         newSocket.onmessage = (message) => {
@@ -60,7 +60,7 @@ export default function StartChat(){
           const {sendmessage} = parsedata;
           if (sendmessage) {
             setincommingmsg(sendmessage);
-            setchathistory((prevHistory) => [...prevHistory, {id:"1",senderId:session.user.id,body:sendmessage,recieverId:searchParams.get('recieverId'),createdAt:gettime()}]);           
+            setchathistory((prevHistory) => [...prevHistory, {id:"1",senderId:session.user.id,body:sendmessage,recieverId:recieverId,createdAt:gettime()}]);           
         }
           
         }
@@ -69,7 +69,7 @@ export default function StartChat(){
             newSocket.close();
         };
         }
-      }, [sender])
+      }, [sender , recieverId])
     
       function createtime(time) {
         const dateTime = new Date(time);
