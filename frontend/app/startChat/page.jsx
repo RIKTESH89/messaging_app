@@ -110,9 +110,9 @@ export default function StartChat(){
         </div>
         {loader ? <div className="text-center text-3xl">loading....</div> : null}
         <div >
-        {chatHistory.map(function(value){
+        {chatHistory.map(function(value,index){
             return (
-                <div className={session?.user?.id === value.senderId ? "flex items-start gap-2.5 justify-end" : "flex items-start gap-2.5"}>
+                <div key={index} className={session?.user?.id === value.senderId ? "flex items-start gap-2.5 justify-end" : "flex items-start gap-2.5"}>
                     <div class="flex flex-col gap-1 w-full max-w-[320px] ">
                         <div class="flex items-center space-x-2 rtl:space-x-reverse">
                             <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{createtime(value.createdAt)}</span>
@@ -128,7 +128,7 @@ export default function StartChat(){
         <div className="mb-20">
             {chathistory.map((msg, index) => (
             <div>
-            <div className={msg.id != "1" ? "flex items-start gap-2.5 justify-end" : "flex items-start gap-2.5"}>
+            <div key={index} className={msg.id != "1" ? "flex items-start gap-2.5 justify-end" : "flex items-start gap-2.5"}>
                     <div class="flex flex-col gap-1 w-full max-w-[320px] ">
                         <div class="flex items-center space-x-2 rtl:space-x-reverse">
                             <span class="text-sm font-normal text-gray-500 dark:text-gray-400">{createtime(msg.createdAt)}</span>
