@@ -51,7 +51,7 @@ export default function StartChat(){
             const newSocket = new WebSocket('wss://messaging-app-idpa.onrender.com');
         newSocket.onopen = () => {
             console.log("sockets are open now")
-            console.log(chatState[searchParams.get('recieverId')])
+            console.log(chatState[recieverId])
             newSocket.send(JSON.stringify({type:"signup",id : parseInt(sender),sid: parseInt(sender),rid: parseInt(recieverId)}));
         }
 
